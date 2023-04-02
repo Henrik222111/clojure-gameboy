@@ -53,14 +53,194 @@
   "RLC (HL)"
   [gb]
   (-> gb
-      (operations/rlc-at :HL)
-      (operations/add-cycles 8)))
+      (operations/rlc-at (:HL gb))
+      (operations/add-cycles 16)))
 
 (defn opcode_07
   "RLC A"
   [gb]
   (-> gb
       (operations/rlc-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                rotate right                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_08
+  "RRC B"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_09
+  "RRC C"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_0a
+  "RRC D"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_0b
+  "RRC E"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_0c
+  "RRC H"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_0d
+  "RRC L"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_0e
+  "RRC (HL)"
+  [gb]
+  (-> gb
+      (operations/rrc-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_0f
+  "RRC A"
+  [gb]
+  (-> gb
+      (operations/rrc-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       rotate left through carry flag                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_10
+  "RL B"
+  [gb]
+  (-> gb
+      (operations/rl-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_11
+  "RL C"
+  [gb]
+  (-> gb
+      (operations/rl-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_12
+  "RL D"
+  [gb]
+  (-> gb
+      (operations/rl-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_13
+  "RL E"
+  [gb]
+  (-> gb
+      (operations/rl-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_14
+  "RL H"
+  [gb]
+  (-> gb
+      (operations/rl-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_15
+  "RL L"
+  [gb]
+  (-> gb
+      (operations/rl-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_16
+  "RL (HL)"
+  [gb]
+  (-> gb
+      (operations/rl-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_17
+  "RL A"
+  [gb]
+  (-> gb
+      (operations/rl-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      rotate right through carry flag                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_18
+  "RR B"
+  [gb]
+  (-> gb
+      (operations/rr-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_19
+  "RR C"
+  [gb]
+  (-> gb
+      (operations/rr-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_1a
+  "RR D"
+  [gb]
+  (-> gb
+      (operations/rr-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_1b
+  "RR E"
+  [gb]
+  (-> gb
+      (operations/rr-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_1c
+  "RR H"
+  [gb]
+  (-> gb
+      (operations/rr-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_1d
+  "RR L"
+  [gb]
+  (-> gb
+      (operations/rr-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_18
+  "RR (HL)"
+  [gb]
+  (-> gb
+      (operations/rr-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_1f
+  "RR A"
+  [gb]
+  (-> gb
+      (operations/rr-reg :A)
       (operations/add-cycles 8)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -113,7 +293,7 @@
   "SWAP (HL)"
   [gb]
   (-> gb
-      (operations/swap-at :HL)
+      (operations/swap-at (:HL gb))
       (operations/add-cycles 16)))
 
 (defn opcode_37
@@ -173,7 +353,7 @@
   "BIT 0,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 0)
+      (operations/bit-test-at (:HL gb) 0)
       (operations/add-cycles 12)))
 
 (defn opcode_47
@@ -233,7 +413,7 @@
   "BIT 1,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 1)
+      (operations/bit-test-at (:HL gb) 1)
       (operations/add-cycles 12)))
 
 (defn opcode_4f
@@ -293,7 +473,7 @@
   "BIT 2,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 2)
+      (operations/bit-test-at (:HL gb) 2)
       (operations/add-cycles 12)))
 
 (defn opcode_57
@@ -353,7 +533,7 @@
   "BIT 3,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 3)
+      (operations/bit-test-at (:HL gb) 3)
       (operations/add-cycles 12)))
 
 (defn opcode_5f
@@ -413,7 +593,7 @@
   "BIT 4,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 4)
+      (operations/bit-test-at (:HL gb) 4)
       (operations/add-cycles 12)))
 
 (defn opcode_67
@@ -473,7 +653,7 @@
   "BIT 5,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 5)
+      (operations/bit-test-at (:HL gb) 5)
       (operations/add-cycles 12)))
 
 (defn opcode_6f
@@ -533,7 +713,7 @@
   "BIT 6,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 6)
+      (operations/bit-test-at (:HL gb) 6)
       (operations/add-cycles 12)))
 
 (defn opcode_77
@@ -593,7 +773,7 @@
   "BIT 7,(HL)"
   [gb]
   (-> gb
-      (operations/bit-test-at :HL 7)
+      (operations/bit-test-at (:HL gb) 7)
       (operations/add-cycles 12)))
 
 (defn opcode_7f
@@ -653,7 +833,7 @@
   "RES 0,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 0)
+      (operations/bit-clear-at (:HL gb) 0)
       (operations/add-cycles 16)))
 
 (defn opcode_87
@@ -713,7 +893,7 @@
   "RES 1,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 1)
+      (operations/bit-clear-at (:HL gb) 1)
       (operations/add-cycles 16)))
 
 (defn opcode_8f
@@ -773,7 +953,7 @@
   "RES 2,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 2)
+      (operations/bit-clear-at (:HL gb) 2)
       (operations/add-cycles 16)))
 
 (defn opcode_97
@@ -833,7 +1013,7 @@
   "RES 3,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 3)
+      (operations/bit-clear-at (:HL gb) 3)
       (operations/add-cycles 16)))
 
 (defn opcode_9f
@@ -894,7 +1074,7 @@
   "RES 4,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 4)
+      (operations/bit-clear-at (:HL gb) 4)
       (operations/add-cycles 16)))
 
 (defn opcode_a7
@@ -954,7 +1134,7 @@
   "RES 5,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 5)
+      (operations/bit-clear-at (:HL gb) 5)
       (operations/add-cycles 16)))
 
 (defn opcode_af
@@ -1014,7 +1194,7 @@
   "RES 6,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 6)
+      (operations/bit-clear-at (:HL gb) 6)
       (operations/add-cycles 16)))
 
 (defn opcode_b7
@@ -1074,7 +1254,7 @@
   "RES 7,(HL)"
   [gb]
   (-> gb
-      (operations/bit-clear-at :HL 7)
+      (operations/bit-clear-at (:HL gb) 7)
       (operations/add-cycles 16)))
 
 (defn opcode_bf
@@ -1134,7 +1314,7 @@
   "SET 0,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 0)
+      (operations/bit-set-at (:HL gb) 0)
       (operations/add-cycles 16)))
 
 (defn opcode_c7
@@ -1194,7 +1374,7 @@
   "SET 1,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 1)
+      (operations/bit-set-at (:HL gb) 1)
       (operations/add-cycles 16)))
 
 (defn opcode_cf
@@ -1254,7 +1434,7 @@
   "SET 2,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 2)
+      (operations/bit-set-at (:HL gb) 2)
       (operations/add-cycles 16)))
 
 (defn opcode_d7
@@ -1314,7 +1494,7 @@
   "SET 3,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 3)
+      (operations/bit-set-at (:HL gb) 3)
       (operations/add-cycles 16)))
 
 (defn opcode_df
@@ -1374,7 +1554,7 @@
   "SET 4,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 4)
+      (operations/bit-set-at (:HL gb) 4)
       (operations/add-cycles 16)))
 
 (defn opcode_e7
@@ -1434,7 +1614,7 @@
   "SET 5,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 5)
+      (operations/bit-set-at (:HL gb) 5)
       (operations/add-cycles 16)))
 
 (defn opcode_ef
@@ -1494,7 +1674,7 @@
   "SET 6,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 6)
+      (operations/bit-set-at (:HL gb) 6)
       (operations/add-cycles 16)))
 
 (defn opcode_f7
@@ -1554,7 +1734,7 @@
   "SET 7,(HL)"
   [gb]
   (-> gb
-      (operations/bit-set-at :HL 7)
+      (operations/bit-set-at (:HL gb) 7)
       (operations/add-cycles 16)))
 
 (defn opcode_ff

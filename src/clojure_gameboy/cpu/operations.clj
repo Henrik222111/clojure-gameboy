@@ -58,22 +58,22 @@
 (defn z-flag?
   "True if Z-flag is set in `gb`, otherwise false"
   [gb]
-  (bit-test (:A gb) 7))
+  (bit-test (:F gb) 7))
 
 (defn n-flag?
   "True if N-flag is set in `gb`, otherwise false"
   [gb]
-  (bit-test (:A gb) 6))
+  (bit-test (:F gb) 6))
 
 (defn h-flag?
   "True if H-flag is set in `gb`, otherwise false"
   [gb]
-  (bit-test (:A gb) 5))
+  (bit-test (:F gb) 5))
 
 (defn c-flag?
   "True if C-flag is set in `gb`, otherwise false"
   [gb]
-  (bit-test (:A gb) 4))
+  (bit-test (:F gb) 4))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               rlc functions                                ;;
@@ -93,13 +93,97 @@
         (z-flag (zero? new-x))
         (n-flag false)
         (h-flag false)
-        (c-flag (bit-test new-x 0)))))
+        (c-flag (bit-test x 7)))))
 
 (defn rlc-at
   "Rotate byte at address `adr` left in `gb`.
    Z-flag is set if the result is zero.
    N- and H-flag are cleared.
    C-flag contains old bit 7 data."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               rrc functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn rrc-reg
+  "Rotate register `reg` right in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (bit-or (bit-shift-left (bit-and 0x01 x) 7)
+                      (unsigned-bit-shift-right x 1))]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 0)))))
+
+(defn rrc-at
+  "Rotate byte at address `adr` right in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                rl functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn rl-reg
+  "Rotate register `reg` left through carry flag in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (bit-or (bit-shift-left (bit-and 0x7f x) 1)
+                      (if (c-flag? gb) 0x01 0x00))]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 7)))))
+
+(defn rl-at
+  "Rotate byte at address `adr` left through carry flag in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                rr functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn rr-reg
+  "Rotate register `reg` right through carry flag in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (bit-or (if (c-flag? gb) 0x80 0x00)
+                      (unsigned-bit-shift-right x 1))]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 0)))))
+
+(defn rr-at
+  "Rotate byte at address `adr` right through carry flag in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
   [gb adr]
   (println "FIX ME"))
 
