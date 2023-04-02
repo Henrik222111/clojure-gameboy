@@ -20,7 +20,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn z-flag
-  "Changes z-flag in `gb` to `pred`.
+  "Changes Z-flag in `gb` to `pred`.
    Flag is set if `pred` is thruthy, otherwise it will be cleared."
   [gb pred]
   (if pred
@@ -28,7 +28,7 @@
     (update gb :AF (fn [[A F]] [A (bit-clear F 7)]))))
 
 (defn n-flag
-  "Changes n-flag in `gb` to `pred`.
+  "Changes N-flag in `gb` to `pred`.
    Flag is set if `pred` is thruthy, otherwise it will be cleared."
   [gb pred]
   (if pred
@@ -36,7 +36,7 @@
     (update gb :AF (fn [[A F]] [A (bit-clear F 6)]))))
 
 (defn h-flag
-  "Changes h-flag in `gb` to `pred`.
+  "Changes H-flag in `gb` to `pred`.
    Flag is set if `pred` is thruthy, otherwise it will be cleared."
   [gb pred]
   (if pred
@@ -44,7 +44,7 @@
     (update gb :AF (fn [[A F]] [A (bit-clear F 5)]))))
 
 (defn c-flag
-  "Changes c-flag in `gb` to `pred`.
+  "Changes C-flag in `gb` to `pred`.
    Flag is set if `pred` is thruthy, otherwise it will be cleared."
   [gb pred]
   (if pred
@@ -52,13 +52,281 @@
     (update gb :AF (fn [[A F]] [A (bit-clear F 4)]))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;    bit-test functions for every register and the byte pointed to by HL     ;;
+;;          functions to get flags from f register [Z N H C 0 0 0 0]          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn z-flag?
+  "True if Z-flag is set in `gb`, otherwise false"
+  [gb]
+  (let [[A _] (:AF gb)]
+    (if-not (= 0 (bit-and 0x80 A)) true false)))
+
+(defn n-flag?
+  "True if N-flag is set in `gb`, otherwise false"
+  [gb]
+  (let [[A _] (:AF gb)]
+    (if-not (= 0 (bit-and 0x40 A)) true false)))
+
+(defn h-flag?
+  "True if H-flag is set in `gb`, otherwise false"
+  [gb]
+  (let [[A _] (:AF gb)]
+    (if-not (= 0 (bit-and 0x20 A)) true false)))
+
+(defn c-flag?
+  "True if C-flag is set in `gb`, otherwise false"
+  [gb]
+  (let [[A _] (:AF gb)]
+    (if-not (= 0 (bit-and 0x10 A)) true false)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;       rlc functions for every register and the byte pointed to by HL       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn rlc-B
+  "Rotate B left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[B C] (:BC gb)
+        newB (bit-or (bit-shift-left (bit-and 0x7f B) 1)
+                     (unsigned-bit-shift-right B 7))]
+    (-> gb
+        (assoc :BC [newB C])
+        (z-flag (zero? newB))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newB 0)))))
+
+(defn rlc-C
+  "Rotate C left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[B C] (:BC gb)
+        newC (bit-or (bit-shift-left (bit-and 0x7f C) 1)
+                     (unsigned-bit-shift-right C 7))]
+    (-> gb
+        (assoc :BC [B newC])
+        (z-flag (zero? newC))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newC 0)))))
+
+(defn rlc-D
+  "Rotate D left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[D E] (:DE gb)
+        newD (bit-or (bit-shift-left (bit-and 0x7f D) 1)
+                     (unsigned-bit-shift-right D 7))]
+    (-> gb
+        (assoc :DE [newD E])
+        (z-flag (zero? newD))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newD 0)))))
+
+(defn rlc-E
+  "Rotate E left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[D E] (:DE gb)
+        newE (bit-or (bit-shift-left (bit-and 0x7f E) 1)
+                     (unsigned-bit-shift-right E 7))]
+    (-> gb
+        (assoc :DE [D newE])
+        (z-flag (zero? newE))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newE 0)))))
+
+(defn rlc-H
+  "Rotate H left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[H L] (:HL gb)
+        newH (bit-or (bit-shift-left (bit-and 0x7f H) 1)
+                     (unsigned-bit-shift-right H 7))]
+    (-> gb
+        (assoc :HL [newH L])
+        (z-flag (zero? newH))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newH 0)))))
+
+(defn rlc-L
+  "Rotate L left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[H L] (:HL gb)
+        newL (bit-or (bit-shift-left (bit-and 0x7f L) 1)
+                     (unsigned-bit-shift-right L 7))]
+    (-> gb
+        (assoc :HL [H newL])
+        (z-flag (zero? newL))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newL 0)))))
+
+(defn rlc-at-HL
+  "Rotate byte pointed to by HL left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (println "FIX ME"))
+
+(defn rlc-A
+  "Rotate A left in `gb`.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb]
+  (let [[A F] (:AF gb)
+        newA (bit-or (bit-shift-left (bit-and 0x7f A) 1)
+                     (unsigned-bit-shift-right A 7))]
+    (-> gb
+        (assoc :AF [newA F])
+        (z-flag (zero? newA))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test newA 0)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;      swap functions for every register and the byte pointed to by HL       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn swap-B
+  "Swap upper and lower nibbles of B in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[B C] (:BC gb)
+        newB (bit-or (bit-shift-left (bit-and B 0x0f) 4)
+                     (unsigned-bit-shift-right B 4))]
+    (-> gb
+        (assoc :BC [newB C])
+        (z-flag (zero? newB))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-C
+  "Swap upper and lower nibbles of C in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[B C] (:BC gb)
+        newC (bit-or (bit-shift-left (bit-and C 0x0f) 4)
+                     (unsigned-bit-shift-right C 4))]
+    (-> gb
+        (assoc :BC [B newC])
+        (z-flag (zero? newC))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-D
+  "Swap upper and lower nibbles of D in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[D E] (:DE gb)
+        newD (bit-or (bit-shift-left (bit-and D 0x0f) 4)
+                     (unsigned-bit-shift-right D 4))]
+    (-> gb
+        (assoc :BC [newD E])
+        (z-flag (zero? newD))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-E
+  "Swap upper and lower nibbles of E in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[D E] (:DE gb)
+        newE (bit-or (bit-shift-left (bit-and E 0x0f) 4)
+                     (unsigned-bit-shift-right E 4))]
+    (-> gb
+        (assoc :BC [D newE])
+        (z-flag (zero? newE))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-H
+  "Swap upper and lower nibbles of H in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[H L] (:HL gb)
+        newH (bit-or (bit-shift-left (bit-and H 0x0f) 4)
+                     (unsigned-bit-shift-right H 4))]
+    (-> gb
+        (assoc :BC [newH L])
+        (z-flag (zero? newH))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-L
+  "Swap upper and lower nibbles of L in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[H L] (:HL gb)
+        newL (bit-or (bit-shift-left (bit-and L 0x0f) 4)
+                     (unsigned-bit-shift-right L 4))]
+    (-> gb
+        (assoc :BC [H newL])
+        (z-flag (zero? newL))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+(defn swap-at-HL
+  "Swap upper and lower nibbles of byte pointed to by HL in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (println "FIX ME"))
+
+(defn swap-A
+  "Swap upper and lower nibbles of A in `gb`.
+   Z-flag is set if the result is zero.
+   N-, H- and C-flag are cleared."
+  [gb]
+  (let [[A F] (:AF gb)
+        newA (bit-or (bit-shift-left (bit-and A 0x0f) 4)
+                     (unsigned-bit-shift-right A 4))]
+    (-> gb
+        (assoc :BC [newA F])
+        (z-flag (zero? newA))
+        (n-flag false)
+        (h-flag false)
+        (c-flag false))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;    bit-test functions for every register and the byte pointed to by HL     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(type (+' (byte 126) (byte 1)))
 (defn bit-test-B
   "Tests if bit `bit` is set in register B in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[B _] (:BC gb)
         pred (bit-test B bit)]
@@ -69,8 +337,8 @@
 
 (defn bit-test-C
   "Tests if bit `bit` is set in register C in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[_ C] (:BC gb)
         pred (bit-test C bit)]
@@ -81,8 +349,8 @@
 
 (defn bit-test-D
   "Tests if bit `bit` is set in register D in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[D _] (:DE gb)
         pred (bit-test D bit)]
@@ -93,8 +361,8 @@
 
 (defn bit-test-E
   "Tests if bit `bit` is set in register E in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[_ E] (:DE gb)
         pred (bit-test E bit)]
@@ -105,8 +373,8 @@
 
 (defn bit-test-H
   "Tests if bit `bit` is set in register H in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[H _] (:HL gb)
         pred (bit-test H bit)]
@@ -117,8 +385,8 @@
 
 (defn bit-test-L
   "Tests if bit `bit` is set in register L in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[_ L] (:HL gb)
         pred (bit-test L bit)]
@@ -129,15 +397,15 @@
 
 (defn bit-test-at-HL
   "Tests if bit `bit` is set in byte pointed to by HL in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (println "FIX ME"))
 
 (defn bit-test-A
   "Tests if bit `bit` is set in register A in `gb`.
-   If it is set the z-flag will be set, otherwise it will be cleared.
-   The n-flag is cleared and the h-flag is set."
+   If it is set the Z-flag will be set, otherwise it will be cleared.
+   The N-flag is cleared and the H-flag is set."
   [gb bit]
   (let [[A _] (:AF gb)
         pred (bit-test A bit)]
