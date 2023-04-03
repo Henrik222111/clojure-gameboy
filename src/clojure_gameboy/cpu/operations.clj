@@ -188,6 +188,65 @@
   (println "FIX ME"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               sla functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn sla-reg
+  "Shift register `reg` left into carry flag in `gb`.
+   LSB is set to 0.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (bit-shift-left (bit-and 0x7f x) 1)]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 7)))))
+
+(defn sla-at
+  "Shift byte at address `adr` left into carry flag in `gb`.
+   LSB is set to 0.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 7 data."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               sra functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn sra-reg
+  "Shift register `reg` right into carry flag in `gb`.
+   MSB does not change.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (bit-or (bit-and 0x80 x)
+                      (unsigned-bit-shift-right x 1))]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 0)))))
+
+(defn sra-at
+  "Shift byte at address `adr` right into carry flag in `gb`.
+   MSB does not change.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               swap functions                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -210,6 +269,35 @@
   "Swap upper and lower nibbles of byte at address `adr` in `gb`.
    Z-flag is set if the result is zero.
    N-, H- and C-flag are cleared."
+  [gb adr]
+  (println "FIX ME"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               srl functions                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn srl-reg
+  "Shift register `reg` right into carry flag in `gb`.
+   MSB ist set to 0.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
+  [gb reg]
+  (let [x (get gb reg)
+        new-x (unsigned-bit-shift-right (bit-and 0xfe x) 1)]
+    (-> gb
+        (assoc reg new-x)
+        (z-flag (zero? new-x))
+        (n-flag false)
+        (h-flag false)
+        (c-flag (bit-test x 0)))))
+
+(defn srl-at
+  "Shift byte at address `adr` right into carry flag in `gb`.
+   MSB is set to 0.
+   Z-flag is set if the result is zero.
+   N- and H-flag are cleared.
+   C-flag contains old bit 0 data."
   [gb adr]
   (println "FIX ME"))
 

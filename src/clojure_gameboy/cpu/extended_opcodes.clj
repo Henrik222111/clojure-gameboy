@@ -229,7 +229,7 @@
       (operations/rr-reg :L)
       (operations/add-cycles 8)))
 
-(defn opcode_18
+(defn opcode_1e
   "RR (HL)"
   [gb]
   (-> gb
@@ -241,6 +241,126 @@
   [gb]
   (-> gb
       (operations/rr-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 shift left                                 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_20
+  "SLA B"
+  [gb]
+  (-> gb
+      (operations/sla-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_21
+  "SLA C"
+  [gb]
+  (-> gb
+      (operations/sla-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_22
+  "SLA D"
+  [gb]
+  (-> gb
+      (operations/sla-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_23
+  "SLA E"
+  [gb]
+  (-> gb
+      (operations/sla-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_24
+  "SLA H"
+  [gb]
+  (-> gb
+      (operations/sla-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_25
+  "SLA L"
+  [gb]
+  (-> gb
+      (operations/sla-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_26
+  "SLA (HL)"
+  [gb]
+  (-> gb
+      (operations/sla-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_27
+  "SLA A"
+  [gb]
+  (-> gb
+      (operations/sla-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                            shift right (signed)                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_28
+  "SRA B"
+  [gb]
+  (-> gb
+      (operations/sra-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_29
+  "SRA C"
+  [gb]
+  (-> gb
+      (operations/sra-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_2a
+  "SRA D"
+  [gb]
+  (-> gb
+      (operations/sra-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_2b
+  "SRA E"
+  [gb]
+  (-> gb
+      (operations/sra-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_2c
+  "SRA H"
+  [gb]
+  (-> gb
+      (operations/sra-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_2d
+  "SRA L"
+  [gb]
+  (-> gb
+      (operations/sra-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_2e
+  "SRA (HL)"
+  [gb]
+  (-> gb
+      (operations/sra-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_2f
+  "SRA A"
+  [gb]
+  (-> gb
+      (operations/sra-reg :A)
       (operations/add-cycles 8)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -301,6 +421,66 @@
   [gb]
   (-> gb
       (operations/swap-reg :A)
+      (operations/add-cycles 8)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                            shift right unsigned                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_38
+  "SRL B"
+  [gb]
+  (-> gb
+      (operations/srl-reg :B)
+      (operations/add-cycles 8)))
+
+(defn opcode_39
+  "SRL C"
+  [gb]
+  (-> gb
+      (operations/srl-reg :C)
+      (operations/add-cycles 8)))
+
+(defn opcode_3a
+  "SRL D"
+  [gb]
+  (-> gb
+      (operations/srl-reg :D)
+      (operations/add-cycles 8)))
+
+(defn opcode_3b
+  "SRL E"
+  [gb]
+  (-> gb
+      (operations/srl-reg :E)
+      (operations/add-cycles 8)))
+
+(defn opcode_3c
+  "SRL H"
+  [gb]
+  (-> gb
+      (operations/srl-reg :H)
+      (operations/add-cycles 8)))
+
+(defn opcode_3d
+  "SRL L"
+  [gb]
+  (-> gb
+      (operations/srl-reg :L)
+      (operations/add-cycles 8)))
+
+(defn opcode_3e
+  "SRL (HL)"
+  [gb]
+  (-> gb
+      (operations/srl-at (:HL gb))
+      (operations/add-cycles 16)))
+
+(defn opcode_3f
+  "SRL A"
+  [gb]
+  (-> gb
+      (operations/srl-reg :A)
       (operations/add-cycles 8)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
