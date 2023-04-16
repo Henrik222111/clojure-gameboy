@@ -5,6 +5,59 @@
             [clojure-gameboy.cpu.extended-opcodes :as extended-opcodes]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to B                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_40
+  "LD B,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_41
+  "LD B,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_42
+  "LD B,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_43
+  "LD B,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_44
+  "LD B,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_45
+  "LD B,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_47
+  "LD B,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :B :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               execute opcode                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
