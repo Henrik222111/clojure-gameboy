@@ -58,6 +58,324 @@
       (operations/add-cycles 4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to C                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_48
+  "LD C,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_49
+  "LD C,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_4a
+  "LD C,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_4b
+  "LD C,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_4c
+  "LD C,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_4d
+  "LD C,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_4f
+  "LD C,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :C :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to D                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_50
+  "LD D,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_51
+  "LD D,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_52
+  "LD D,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_53
+  "LD D,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_54
+  "LD D,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_55
+  "LD D,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_57
+  "LD D,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :D :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to E                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_58
+  "LD E,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_59
+  "LD E,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_5a
+  "LD E,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_5b
+  "LD E,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_5c
+  "LD E,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_5d
+  "LD E,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_5f
+  "LD E,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :E :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to H                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_60
+  "LD H,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_61
+  "LD H,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_62
+  "LD H,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_63
+  "LD H,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_64
+  "LD H,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_65
+  "LD H,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_67
+  "LD H,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :H :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to L                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_68
+  "LD L,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_69
+  "LD L,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_6a
+  "LD L,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_6b
+  "LD L,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_6c
+  "LD L,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_6d
+  "LD L,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_6f
+  "LD L,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :L :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 load to A                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn opcode_78
+  "LD A,B"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :B)
+      (operations/add-cycles 4)))
+
+(defn opcode_79
+  "LD A,C"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :C)
+      (operations/add-cycles 4)))
+
+(defn opcode_7a
+  "LD A,D"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :D)
+      (operations/add-cycles 4)))
+
+(defn opcode_7b
+  "LD A,E"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :E)
+      (operations/add-cycles 4)))
+
+(defn opcode_7c
+  "LD A,H"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :H)
+      (operations/add-cycles 4)))
+
+(defn opcode_7d
+  "LD A,L"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :L)
+      (operations/add-cycles 4)))
+
+(defn opcode_7f
+  "LD A,A"
+  [gb]
+  (-> gb
+      (operations/load_reg_from_reg :A :A)
+      (operations/add-cycles 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               execute opcode                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
